@@ -8,9 +8,19 @@
       "email": "2300071698@qq.com"
     }
   ],
-  "minimum-stability": "dev",
+  "extra": {
+    "laravel": {
+      "providers": [
+        "\\Houdunwang\\Module\\LaravelServiceProvider"
+      ],
+      "aliases": {
+        "HdModule": "\\Houdunwang\\Module\\Facade"
+      }
+    }
+  },
+  "minimum-stability": "stable",
   "require": {
-    "houdunwang/arr": "dev-master"
+    "nwidart/laravel-modules": "^3.3"
   },
   "autoload": {
     "psr-4": {
