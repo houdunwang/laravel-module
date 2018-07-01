@@ -6,9 +6,8 @@
  * '-------------------------------------------------------------------*/
 
 namespace Houdunwang\Module;
-
 use Illuminate\Support\ServiceProvider;
-
+use Houdunwang\Module\Commands\ModuleCreateCommand;
 class LaravelServiceProvider extends ServiceProvider
 {
     /**
@@ -18,17 +17,11 @@ class LaravelServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->config();
-        $this->migration();
-    }
-
-    protected function migration()
-    {
-    }
-
-    protected function config()
-    {
-
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                ModuleCreateCommand::class,
+            ]);
+        }
     }
 
     /**
