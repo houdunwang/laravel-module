@@ -6,8 +6,12 @@
  * '-------------------------------------------------------------------*/
 
 namespace Houdunwang\Module;
+
+use Houdunwang\Module\Commands\PermissionCreateCommand;
 use Illuminate\Support\ServiceProvider;
 use Houdunwang\Module\Commands\ModuleCreateCommand;
+use Houdunwang\Module\Commands\ConfigCreateCommand;
+
 class LaravelServiceProvider extends ServiceProvider
 {
     /**
@@ -20,6 +24,8 @@ class LaravelServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 ModuleCreateCommand::class,
+                ConfigCreateCommand::class,
+                PermissionCreateCommand::class
             ]);
         }
     }

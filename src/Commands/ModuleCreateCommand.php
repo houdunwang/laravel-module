@@ -41,6 +41,8 @@ class ModuleCreateCommand extends Command
         $this->call('module:make', [
             'name' => [$name]
         ]);
-
+        $this->call('hd:config', [
+            'name' => $name
+        ]);
     }
 }
