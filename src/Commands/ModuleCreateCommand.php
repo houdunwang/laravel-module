@@ -38,8 +38,9 @@ class ModuleCreateCommand extends Command
     public function handle()
     {
         $name = $this->argument('name');
-        Artisan::call('module:make', [
+        $this->call('module:make', [
             'name' => [$name]
         ]);
+
     }
 }
