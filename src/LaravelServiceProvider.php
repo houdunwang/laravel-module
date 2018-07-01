@@ -38,7 +38,7 @@ class LaravelServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(Provider::class, function ($app) {
+        $this->app->singleton('HdModule', function ($app) {
             return new Provider();
         });
     }

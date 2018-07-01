@@ -11,6 +11,6 @@ class Provider
 {
     public function show()
     {
-        echo 33;
+        echo 'test';
     }
 }
