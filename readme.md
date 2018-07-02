@@ -24,7 +24,7 @@
 
 ## 模块管理
 
-#### 创建模块
+### 创建模块
 
 ```
 php artisan hd:module-install Admin
@@ -34,7 +34,7 @@ php artisan hd:module-install Admin
 * 生成 `menus.php` 配置文件
 * 生成 `permission.php` 权限文件
 
-#### 安装模块
+### 安装模块
 
 组件会创建 `modules` 数据表用于记录已经安装的模块，模块安装执行以下动作：
 
@@ -52,9 +52,7 @@ php artisan hd:module-install Admin
 
 ## 模块配置
 
-下面命令生成模块的初始配置文件，创建模块时系统会自动创建。
-
-> 新建模块时会自动执行以下命令生成文件。
+新建模块时系统会自动创建配置，一般情况下不需要独立执行（除组件添加新配置功能外）
 
 ```
 php artisan hd:config Admin
@@ -68,7 +66,9 @@ php artisan hd:config Admin
 
 ## 模块菜单
 
-#### 创建模块菜单
+系统会根据模块配置文件 `menus.php` 生成后台菜单项
+
+**创建模块菜单**
 
 ```
 php artisan hd:menu-install Admin
@@ -76,9 +76,9 @@ php artisan hd:menu-install Admin
 
 ## 模块权限
 
-权限操作依赖 [laravel-permission](https://github.com/spatie/laravel-permission#installation) 进行权限管理，所以首先需要安装。
+### 安装权限组件
 
-#### 安装 laravel-permission
+权限操作依赖 [laravel-permission](https://github.com/spatie/laravel-permission#installation) 进行权限管理，所以首先需要安装。
 
 ```
 composer require spatie/laravel-permission
@@ -93,28 +93,12 @@ php artisan migrate
 
 > 认真检查每一步要安装正确，不要重复安装！会重复生成数据迁移文件，导致执行数据迁移出错。
 
-#### 设置权限
+### 设置权限
 
-删除原有模块权限信息，并根据 `Admin` 模块下的 `Config/permission.php` 权限配置文件重新生成权限。
+系统根据 `Admin` 模块配置文件 `permission.php` 重新生成权限，执行以下命令会删除原有模块权限并重建。
 
 ```
 php artisan hd:permission Admin
-```
-
-> 必须存在正确配置的 `Config/permission.php` 文件
-
-下面是一个 `Config/permission.php` 权限配置文件示例：
-
-```
-<?php
-//权限表
-return [
-    //下面是一个示例操作 "权限分类"=>["权限描述"=>"权限标识"]
-    "文章管理" => [
-        "编辑文章" => "editor article",
-        "删除文章" => "delete article",
-    ],
-];
 ```
 
 ## License
