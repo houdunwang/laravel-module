@@ -6,9 +6,6 @@
  * '-------------------------------------------------------------------*/
 namespace Houdunwang\Module\Services;
 
-use Houdunwang\Module\Models\Module;
-use Houdunwang\Module\Models\ModuleMenu;
-use Houdunwang\Module\Models\ModuleMenuGroup;
 use Houdunwang\Module\Traits\BaseTrait;
 
 class MenusService
@@ -17,9 +14,11 @@ class MenusService
 
     public function all()
     {
-        $menus = [];
-        foreach (Module::get() as $module) {
-            $path                   = config('modules.paths.modules')."/{$module->name}/Config";
+        $menus   = [];
+        $modules = glob(config('modules.paths.modules').'/*');
+        foreach ($modules as $module) {
+            $name                   = basename($module);
+            $path                   = config('modules.paths.modules')."/{$name}/Config";
             $config                 = include "{$path}/config.php";
             $menus[$config['name']] = include "{$path}/menus.php";
         }

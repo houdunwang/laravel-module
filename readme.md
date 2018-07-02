@@ -8,7 +8,7 @@
 
 ## 安装
 
-    composer require houdunwang/laravel-modules
+    composer require houdunwang/laravel-module
     
     php artisan vendor:publish --provider="Nwidart\Modules\LaravelModulesServiceProvider"
     
