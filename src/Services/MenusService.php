@@ -1,16 +1,15 @@
 <?php
 /** .-------------------------------------------------------------------
- * |      Site: www.hdcms.com
- * |      Date: 2018/6/25 下午3:16
+ * |      Site: www.hdcms.com  www.houdunren.com
+ * |      Date: 2018/7/2 下午2:21
  * |    Author: 向军大叔 <2300071698@qq.com>
  * '-------------------------------------------------------------------*/
+namespace Houdunwang\Module\Services;
 
-namespace Houdunwang\Module;
-
-class Provider
+class MenusService
 {
-    public function getMenus()
+    public function all()
     {
-        die( 'test');
+
     }
 }

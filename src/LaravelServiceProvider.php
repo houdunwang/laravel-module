@@ -8,12 +8,17 @@
 namespace Houdunwang\Module;
 
 use Houdunwang\Module\Commands\PermissionCreateCommand;
+use Houdunwang\Module\Services\MenusService;
 use Illuminate\Support\ServiceProvider;
 use Houdunwang\Module\Commands\ModuleCreateCommand;
 use Houdunwang\Module\Commands\ConfigCreateCommand;
 
 class LaravelServiceProvider extends ServiceProvider
 {
+    public $singletons = [
+        'hd-menu' => MenusService::class,
+    ];
+
     /**
      * Bootstrap services.
      *
@@ -25,9 +30,12 @@ class LaravelServiceProvider extends ServiceProvider
             $this->commands([
                 ModuleCreateCommand::class,
                 ConfigCreateCommand::class,
-                PermissionCreateCommand::class
+                PermissionCreateCommand::class,
             ]);
         }
+
+        //数据迁移文件
+        $this->loadMigrationsFrom(__DIR__.'/Migrations');
     }
 
     /**
@@ -37,8 +45,6 @@ class LaravelServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('HdModule', function ($app) {
-            return new Provider();
-        });
+
     }
 }
