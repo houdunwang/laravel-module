@@ -5,6 +5,7 @@
  * |    Author: 向军大叔 <2300071698@qq.com>
  * '-------------------------------------------------------------------*/
 namespace Houdunwang\Module\Traits;
+use Houdunwang\Module\Models\Module;
 
 trait BaseTrait
 {
