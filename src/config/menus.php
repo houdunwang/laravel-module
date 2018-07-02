@@ -10,13 +10,15 @@
  * title 菜单栏目
  * icon 图标参考 http://fontawesome.dashgame.com/
  * menus 子菜单
+ * permission 权限标识，必须在permission.php配置文件中存在
  */
 return [
     [
-        "title" => "系统管理",
-        "icon"  => "fa fa-address-card",
-        "menus" => [
-            ["title" => "网站配置", "url" => "链接地址", "icon" => "",],
+        "title"      => "系统管理",
+        "icon"       => "fa fa-desktop",
+        'permission' => '权限标识',
+        "menus"      => [
+            ["title" => "网站配置", "permission" => "权限标识", "url" => "链接地址"],
         ],
     ],
 ];

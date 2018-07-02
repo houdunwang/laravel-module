@@ -51,6 +51,7 @@ class PermissionCreateCommand extends Command
                 Permission::create(['name' => $name]);
             }
         }
+        $this->info("{$this->module} permission install successFully");
     }
 
     protected function resetTables()

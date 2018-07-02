@@ -22,16 +22,39 @@
       }
     }
 
-## 命令
+## 模块管理
 
 #### 创建模块
 
 ```
-php artisan hd:module Admin
+php artisan hd:module-install Admin
 ```
-#### 模块配置
+创建模块会同时执行以下操作：
+
+* 生成 `menus.php` 配置文件
+* 生成 `permission.php` 权限文件
+
+#### 安装模块
+
+组件会创建 `modules` 数据表用于记录已经安装的模块，模块安装执行以下动作：
+
+* 根据模块配置文件 `menus.php` 生成后台菜单
+* 根据模块配置文件 `perssions.php` 生成模块权限
+* 模块名称等信息被系统记录
+
+下面是安装 `Admin` 模块安装到系统中
+
+```
+php artisan hd:module-install Admin
+```
+
+> 修改过 `menus.php` 等配置文件后，需要重新执行安装。
+
+## 模块配置
 
 下面命令生成模块的初始配置文件，创建模块时系统会自动创建。
+
+> 新建模块时会自动执行以下命令生成文件。
 
 ```
 php artisan hd:config Admin
@@ -42,6 +65,14 @@ php artisan hd:config Admin
 * config——基础配置，用于配置模块中文描述等信息
 * permission.php——权限设置
 * menus.php——后台管理菜单
+
+## 模块菜单
+
+#### 创建模块菜单
+
+```
+php artisan hd:menu-install Admin
+```
 
 ## 模块权限
 

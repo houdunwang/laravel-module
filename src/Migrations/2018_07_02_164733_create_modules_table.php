@@ -16,8 +16,9 @@ class CreateModulesTable extends Migration
         Schema::create('modules', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->string('name')->comment('模块名称');
-            $table->string('dir')->comment('模块标识');
+            $table->string('title')->comment('模块名称');
+            $table->string('name')->comment('模块标识');
+            $table->string('version')->default('')->comment('版本');
         });
     }
 
