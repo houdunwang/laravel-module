@@ -31,7 +31,9 @@
       }
     }
 
-## 创建模块
+## 使用
+
+### 创建模块
 
 下面的命令是安装 `Admin` 模块
 
@@ -43,7 +45,7 @@ php artisan hd:module Admin
 * 生成 `menus.php` 配置文件
 * 生成 `permission.php` 权限文件
 
-## 模块配置
+### 模块配置
 
 新建模块时系统会自动创建配置，一般情况下不需要执行以下命令生成配置文件（除组件添加新配置功能外）
 
@@ -57,7 +59,7 @@ php artisan hd:config Admin
 * permission.php——权限设置
 * menus.php——后台管理菜单
 
-## 模块菜单
+### 模块菜单
 
 系统会根据模块配置文件 `menus.php` 生成后台菜单项
 
@@ -69,7 +71,7 @@ php artisan hd:config Admin
 app('hd-menu')->all();
 ```
 
-## 模块权限
+### 模块权限
 
 首先需要安装 [laravel-permission](https://github.com/spatie/laravel-permission#installation) 组件，安装方式在上面已经介绍。
 
