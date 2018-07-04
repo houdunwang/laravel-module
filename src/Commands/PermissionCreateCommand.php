@@ -1,14 +1,12 @@
 <?php
 namespace Houdunwang\Module\Commands;
 
-use Houdunwang\Module\Traits\BaseTrait;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Permission;
 
 class PermissionCreateCommand extends Command
 {
-    use BaseTrait;
     /**
      * The name and signature of the console command.
      *
@@ -43,13 +41,16 @@ class PermissionCreateCommand extends Command
     public function handle()
     {
         $this->module = ucfirst($this->argument('name'));
-        $permissions = include $this->getModuleConfigPath($this->module).'permission.php';
+        $config       = include \Module::getModulePath($this->module).'/config/permission.php';
         app()['cache']->forget('spatie.permission.cache');
-        $this->resetTables();
-        foreach ($permissions as $accessLists) {
-            foreach ($accessLists as $access) {
-                $name = $this->module.'::'.$access;
-                Permission::create(['name' => $name]);
+        foreach ($config as $guard => $permissions) {
+            foreach ($permissions as $accessLists) {
+                foreach ($accessLists as $access) {
+                    $name = $this->module.'::'.$access;
+                    if ( ! Permission::where(['name' => $name, 'guard_name' => $guard])->first()) {
+                        Permission::create(['name' => $name,'guard_name'=>$guard]);
+                    }
+                }
             }
         }
         $this->info("{$this->module} permission install successFully");

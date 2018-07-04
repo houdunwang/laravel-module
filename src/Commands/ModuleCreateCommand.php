@@ -38,6 +38,9 @@ class ModuleCreateCommand extends Command
     public function handle()
     {
         $name = $this->argument('name');
+        if(\Module::has($name)){
+            return $this->error("Module [{$this->name}] already exists");
+        }
         $this->call('module:make', [
             'name' => [$name]
         ]);

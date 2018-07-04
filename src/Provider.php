@@ -7,22 +7,14 @@
 
 namespace Houdunwang\Module;
 
-use Illuminate\Support\Facades\Facade as LaravelFacade;
+use Houdunwang\Module\Services\ConfigService;
 
 /**
  * Class Facade
  *
  * @package Houdunwang\Module
  */
-class Facade extends LaravelFacade
+class Provider
 {
-    /**
-     * Get the registered name of the component.
-     *
-     * @return string
-     */
-    protected static function getFacadeAccessor()
-    {
-        return 'HdModule';
-    }
+    use ConfigService;
 }

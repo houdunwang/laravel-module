@@ -7,9 +7,6 @@
 
 namespace Houdunwang\Module;
 
-use Houdunwang\Module\Commands\MenuInstallCommand;
-use Houdunwang\Module\Commands\ModuleInstallAllCommand;
-use Houdunwang\Module\Commands\ModuleInstallCommand;
 use Houdunwang\Module\Commands\PermissionCreateCommand;
 use Houdunwang\Module\Services\MenusService;
 use Illuminate\Support\ServiceProvider;
@@ -19,7 +16,7 @@ use Houdunwang\Module\Commands\ConfigCreateCommand;
 class LaravelServiceProvider extends ServiceProvider
 {
     public $singletons = [
-        'hd-menu' => MenusService::class,
+        'hd-menu'  => MenusService::class,
     ];
 
     /**
@@ -47,6 +44,8 @@ class LaravelServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
+        $this->app->singleton('HDModule', function () {
+            return new Provider();
+        });
     }
 }

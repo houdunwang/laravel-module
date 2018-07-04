@@ -6,19 +6,12 @@
  * '-------------------------------------------------------------------*/
 namespace Houdunwang\Module\Services;
 
-use Houdunwang\Module\Traits\BaseTrait;
-
 class MenusService
 {
-    use BaseTrait;
-
     public function all()
     {
-        $menus   = [];
-        $modules = glob(config('modules.paths.modules').'/*');
-        foreach ($modules as $module) {
-            $name                   = basename($module);
-            $path                   = config('modules.paths.modules')."/{$name}/Config";
+        foreach (\Module::getOrdered() as $module) {
+            $path                   = config('modules.paths.modules')."/{$module->name}/Config";
             $config                 = include "{$path}/config.php";
             $menus[$config['name']] = include "{$path}/menus.php";
         }

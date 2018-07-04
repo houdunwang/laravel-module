@@ -59,6 +59,15 @@ php artisan hd:config Admin
 * permission.php——权限设置
 * menus.php——后台管理菜单
 
+**获取配置**
+
+下面是获取 Admin/config/config.php 文件中的name值，支持 `.` 从深度嵌套的数组中检索值。
+
+```
+use Houdunwang\Module\Services\ModuleConfig;
+ModuleConfig::get('admin.config.name')
+```
+
 ### 模块菜单
 
 系统会根据模块配置文件 `menus.php` 生成后台菜单项

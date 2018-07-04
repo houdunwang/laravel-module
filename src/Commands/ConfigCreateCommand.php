@@ -1,13 +1,11 @@
 <?php
 namespace Houdunwang\Module\Commands;
 
-use Houdunwang\Module\Traits\BaseTrait;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 
 class ConfigCreateCommand extends Command
 {
-    use BaseTrait;
     /**
      * The name and signature of the console command.
      *
@@ -42,7 +40,7 @@ class ConfigCreateCommand extends Command
     public function handle()
     {
         $this->module = ucfirst($this->argument('name'));
-        if ($this->checkModuleExists($this->module) === true) {
+        if (\Module::has($this->module)) {
             $this->copyFiles();
         }
     }
@@ -51,8 +49,8 @@ class ConfigCreateCommand extends Command
     {
         $files = glob(__DIR__.'/../config/*.php');
         foreach ($files as $file) {
-            $to = $this->getModuleConfigPath($this->module).basename($file);
-            if ( is_file($to)) {
+            $to = \Module::getModulePath($this->module).'/config/'.basename($file);
+            if (is_file($to)) {
                 $this->info($to." is exists");
                 continue;
             }
