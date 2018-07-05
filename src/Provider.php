@@ -7,7 +7,9 @@
 
 namespace Houdunwang\Module;
 
-use Houdunwang\Module\Services\ConfigService;
+use Houdunwang\Module\Traits\ConfigService;
+use Houdunwang\Module\Traits\MenusService;
+use Houdunwang\Module\Traits\PermissionService;
 
 /**
  * Class Facade
@@ -16,5 +18,5 @@ use Houdunwang\Module\Services\ConfigService;
  */
 class Provider
 {
-    use ConfigService;
+    use ConfigService, PermissionService, MenusService;
 }

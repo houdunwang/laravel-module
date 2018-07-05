@@ -64,8 +64,7 @@ php artisan hd:config Admin
 下面是获取 Admin/config/config.php 文件中的name值，支持 `.` 从深度嵌套的数组中检索值。
 
 ```
-use Houdunwang\Module\Services\ModuleConfig;
-ModuleConfig::get('admin.config.name')
+\HDModule::config('admin.config.name')
 ```
 
 ### 模块菜单
@@ -77,7 +76,7 @@ ModuleConfig::get('admin.config.name')
 获取系统可使用的所有菜单，以集合形式返回数据。
 
 ```
-app('hd-menu')->all();
+\HDModule::getMenus()
 ```
 
 ### 模块权限
@@ -91,6 +90,20 @@ app('hd-menu')->all();
 ```
 php artisan hd:permission Admin
 ```
+
+不指定模块时生成所有模块的权限表
+
+```
+php artisan hd:permission
+```
+
+**获取权限**
+
+```
+\HDModule::getPermissionLists();
+```
+
+
 
 ## License
 

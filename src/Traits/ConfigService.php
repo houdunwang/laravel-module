@@ -4,7 +4,7 @@
  * |      Date: 2018/7/2 下午2:21
  * |    Author: 向军大叔 <2300071698@qq.com>
  * '-------------------------------------------------------------------*/
-namespace Houdunwang\Module\Services;
+namespace Houdunwang\Module\Traits;
 
 use Module;
 
@@ -22,7 +22,7 @@ trait ConfigService
      *
      * @return mixed
      */
-    public function get($name)
+    public function config($name)
     {
         $exts = explode('.', $name);
         $file = config('modules.paths.modules').'/'.ucfirst(array_shift($exts)).'/config/'.array_shift($exts).'.php';

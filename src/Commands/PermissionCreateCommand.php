@@ -12,7 +12,7 @@ class PermissionCreateCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'hd:permission {name}';
+    protected $signature = 'hd:permission {name=0}';
 
     /**
      * The console command description.
@@ -40,29 +40,30 @@ class PermissionCreateCommand extends Command
      */
     public function handle()
     {
-        $this->module = ucfirst($this->argument('name'));
-        $config       = include \Module::getModulePath($this->module).'/config/permission.php';
         app()['cache']->forget('spatie.permission.cache');
-        foreach ($config as $guard => $permissions) {
-            foreach ($permissions as $accessLists) {
-                foreach ($accessLists as $access) {
-                    $name = $this->module.'::'.$access;
-                    if ( ! Permission::where(['name' => $name, 'guard_name' => $guard])->first()) {
-                        Permission::create(['name' => $name,'guard_name'=>$guard]);
+        foreach ($this->getModules() as $module) {
+            $config = \HDModule::config('admin.permission');
+            foreach ($config as $group) {
+                foreach ($group['permissions'] as $permission) {
+                    if ( ! Permission::where(['name' => $permission['name'], 'guard_name' => $permission['guard']])->first()) {
+                        Permission::create(['name'=>$permission['name'],'guard_name'=>$permission['guard']]);
                     }
                 }
             }
+            $this->info("{$module} permission install successFully");
         }
-        $this->info("{$this->module} permission install successFully");
     }
 
-    protected function resetTables()
+    protected function getModules()
     {
-        $ids = \DB::table('permissions')->where('name', 'like', "{$this->module}::%")->pluck('id');
-        if ($ids) {
-            \DB::table('model_has_permissions')->whereIn('permission_id', $ids)->delete();
-            \DB::table('role_has_permissions')->whereIn('permission_id', $ids)->delete();
-            \DB::table('permissions')->whereIn('id', $ids)->delete();
+        $name    = ucfirst($this->argument('name'));
+        $modules = [];
+        if ($name) {
+            $modules[] = $name;
+        } else {
+            $modules = array_keys(\Module::getOrdered());
         }
+
+        return $modules;
     }
 }

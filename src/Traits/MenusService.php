@@ -4,16 +4,16 @@
  * |      Date: 2018/7/2 下午2:21
  * |    Author: 向军大叔 <2300071698@qq.com>
  * '-------------------------------------------------------------------*/
-namespace Houdunwang\Module\Services;
-#已不使用
-class MenusService
+namespace Houdunwang\Module\Traits;
+
+trait MenusService
 {
-    public function all()
+    public function getMenus()
     {
         foreach (\Module::getOrdered() as $module) {
             $path                   = config('modules.paths.modules')."/{$module->name}/Config";
             $config                 = include "{$path}/config.php";
-            $menus[$config['name']] = include "{$path}/menus.php";
+            $menus[$module->getName()] = include "{$path}/menus.php";
         }
 
         return $menus;
