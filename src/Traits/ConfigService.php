@@ -25,7 +25,7 @@ trait ConfigService
     public function config($name)
     {
         $exts = explode('.', $name);
-        $file = config('modules.paths.modules').'/'.ucfirst(array_shift($exts)).'/config/'.array_shift($exts).'.php';
+        $file = config('modules.paths.modules').'/'.ucfirst(array_shift($exts)).'/Config/'.array_shift($exts).'.php';
         if (is_file($file)) {
             $config = include $file;
 

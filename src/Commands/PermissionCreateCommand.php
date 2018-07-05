@@ -42,7 +42,7 @@ class PermissionCreateCommand extends Command
     {
         app()['cache']->forget('spatie.permission.cache');
         foreach ($this->getModules() as $module) {
-            $config = \HDModule::config('admin.permission');
+            $config = \HDModule::config($module.'.permission');
             foreach ($config as $group) {
                 foreach ($group['permissions'] as $permission) {
                     if ( ! Permission::where(['name' => $permission['name'], 'guard_name' => $permission['guard']])->first()) {
