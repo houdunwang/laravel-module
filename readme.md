@@ -99,11 +99,11 @@ php artisan hd:permission
 
 **获取权限**
 
-```
-\HDModule::getPermissionLists();
-```
+根据 `guard` 获取权限数据，可用于后台配置设置表单。
 
-
+```
+\HDModule::getPermissionByGuard('admin');
+```
 
 ## License
 
