@@ -5,6 +5,11 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Permission;
 
+/**
+ * Class PermissionCreateCommand
+ *
+ * @package Houdunwang\Module\Commands
+ */
 class PermissionCreateCommand extends Command
 {
     /**
@@ -12,7 +17,7 @@ class PermissionCreateCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'hd:permission {name=0}';
+    protected $signature = 'hd:permission {name?}';
 
     /**
      * The console command description.
@@ -21,32 +26,20 @@ class PermissionCreateCommand extends Command
      */
     protected $description = '生成权限数据';
 
+    /**
+     * @var
+     */
     protected $module;
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
-     * Execute the console command.
-     *
-     * @return mixed
-     */
     public function handle()
     {
         app()['cache']->forget('spatie.permission.cache');
-        foreach ($this->getModules() as $module) {
+        foreach ((array)$this->getModules() as $module) {
             $config = \HDModule::config($module.'.permission');
-            foreach ($config as $group) {
-                foreach ($group['permissions'] as $permission) {
-                    if ( ! Permission::where(['name' => $permission['name'], 'guard_name' => $permission['guard']])->first()) {
-                        Permission::create(['name'=>$permission['name'],'guard_name'=>$permission['guard']]);
+            foreach ((array)$config as $group) {
+                foreach ((array)$group['permissions'] as $permission) {
+                    if ( ! $this->permissionIsExists($permission)) {
+                        Permission::create(['name' => $permission['name'], 'guard_name' => $permission['guard']]);
                     }
                 }
             }
@@ -54,12 +47,33 @@ class PermissionCreateCommand extends Command
         }
     }
 
-    protected function getModules()
+    /**
+     * 检查权限标识
+     *
+     * @param array $permission
+     *
+     * @return bool
+     */
+    protected function permissionIsExists(array $permission): bool
     {
-        $name    = ucfirst($this->argument('name'));
+        $where = [
+            ['name', '=', $permission['name']],
+            ['guard_name', '=', $permission['guard']],
+        ];
+
+        return (bool)Permission::where($where)->first();
+    }
+
+    /**
+     * 获取模块
+     *
+     * @return array
+     */
+    protected function getModules(): array
+    {
         $modules = [];
-        if ($name) {
-            $modules[] = $name;
+        if ($module = $this->argument('name')) {
+            $modules[] = ucfirst($module);
         } else {
             $modules = array_keys(\Module::getOrdered());
         }

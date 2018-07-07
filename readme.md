@@ -31,7 +31,7 @@
       }
     }
 
-## 使用
+## 基础
 
 ### 创建模块
 
@@ -67,25 +67,29 @@ php artisan hd:config Admin
 \HDModule::config('admin.config.name')
 ```
 
-### 模块菜单
+## 菜单
 
 系统会根据模块配置文件 `menus.php` 生成后台菜单项
 
-**获取菜单**
+当 menus.php 文件不存在时，执行 `php artisan hd:config Admin` 系统会为模块 Admin 创建菜单。
 
-获取系统可使用的所有菜单，以集合形式返回数据。
+### 获取菜单
+
+获取系统可使用的所有菜单，以集合形式返回数据。可用于后台显示菜单列表。
 
 ```
 \HDModule::getMenus()
 ```
 
-### 模块权限
+## 权限
 
 首先需要安装 [laravel-permission](https://github.com/spatie/laravel-permission#installation) 组件，安装方式在上面已经介绍。
 
-**设置权限**
+### 配置
 
-系统根据 `Admin` 模块配置文件 `permission.php` 重新生成权限，执行以下命令会删除原有模块权限并重建。
+#### 创建
+
+系统根据 `Admin` 模块配置文件 `permission.php` 重新生成权限，执行以下命令会创建权限配置文件。
 
 ```
 php artisan hd:permission Admin
@@ -97,13 +101,107 @@ php artisan hd:permission Admin
 php artisan hd:permission
 ```
 
-**获取权限**
+> 文件存在时不会覆盖
+
+生成的配置文件结构如下：
+
+```
+<?php return [
+    [
+        'group' => '文章管理',
+        'permissions' => [
+            ['title' => '添加栏目', 'name' => 'Modules\Admin\Http\Controllers\CategoryController@create', 'guard' => 'admin'],
+        ],
+    ],
+];
+```
+
+name 指用于验证时的 `权限标识` ，可以使用任何字符定义。如果以 `控制器@方法` 形式定义的，在使用中间件验证时会比较容易。
+
+#### 获取
 
 根据 `guard` 获取权限数据，可用于后台配置设置表单。
 
 ```
 \HDModule::getPermissionByGuard('admin');
 ```
+
+### 中间件
+
+ [laravel-permission](https://github.com/spatie/laravel-permission#using-a-middleware) 组件提供了中间件功能，但处理不够灵活并对资源控制器支持不好。所以`houdunwang/laravel-module` 组件提供了中间件的功能扩展，你也可以使用  [laravel-permission](https://github.com/spatie/laravel-permission#installation)  中间件的所有功能。
+
+以下都是对 `houdunwang/laravel-module`扩展中间件的说明，[laravel-permission](https://github.com/spatie/laravel-permission#using-a-middleware) 中间件使用请查看组件手册。
+
+使用中间件路由需要模块 `permission.php` 配置文件中的权限标识为 `控制器@方法`形式。
+
+#### 站长
+
+配置文件 `config/hd_module.php` 文件中定义站长使用的角色。
+
+```
+'webmaster' => 'webmaster'
+```
+
+在使用中间件验证时，如果不前用户所在角色为站长角色，系统不进行验证直接放行。
+
+#### 普通路由
+
+系统根据控制器方法检查是否存在权限规则，然后自动进行验证。
+
+所以必须正确设置路由配置文件，下面是对编辑文章的权限设置
+
+```
+<?php
+#config/permisson.php
+return [
+    [
+        'group'       => '文章管理',
+        'permissions' => [
+            ['title' => '编辑管理', 'name' => 'Modules\Admin\Http\Controllers\ArticleController@edit', 'guard' => 'admin'],
+        ],
+    ],
+];
+```
+
+下面是编辑文章的路由定义，必须保存 `Modules\Admin\Http\Controllers\ArticleController@edit` 规则已经在权限配置文件中定义，否则系统不验证。
+
+```
+Route::group([
+    'middleware' => ['web', 'auth:admin'],'prefix'     => 'admin','namespace'  => 'Modules\Admin\Http\Controllers'], function () {
+	Route::resource('edit_article', 'ArticleController@edit')->middleware("permission:admin");
+});
+```
+
+上面的 `permission` 中间件的 `admin` 参数是权限 `guard`。
+
+#### 资源路由
+
+资源路由新增资源由 `create` 与 `store`方法完成，更新资源由 `edit` 与 `update` 方法完成。权限规则只需要设置 `create` 与 `edit` 方法即可，在执行 `store` 动作时系统会自动使用 `create` 方法规则，`update` 动作会使用 `create` 方法规则，下面是用户管理的资源控制器规则设置:
+
+```
+<?php
+#config/permisson.php
+return [
+    [
+        'group'       => '会员管理',
+        'permissions' => [
+            ['title' => '会员管理', 'name' => 'Modules\Admin\Http\Controllers\UserController@index', 'guard' => 'admin'],
+            ['title' => '添加会员', 'name' => 'Modules\Admin\Http\Controllers\UserController@create', 'guard' => 'admin'],
+            ['title' => '编辑会员', 'name' => 'Modules\Admin\Http\Controllers\UserController@edit', 'guard' => 'admin'],
+            ['title' => '删除会员', 'name' => 'Modules\Admin\Http\Controllers\UserController@destory', 'guard' => 'admin'],
+            ['title' => '查看会员', 'name' => 'Modules\Admin\Http\Controllers\UserController@show', 'guard' => 'admin'],
+        ],
+    ],
+];
+```
+
+资源路由中间件的使用
+
+```
+Route::resource('role', 'RoleController')->middleware("permission:admin,resource");
+```
+
+上面的 `permission` 中间件的 `admin` 参数是权限 `guard`，中间件 permission 的第二个参数 `resource` 表示这是一个资源路由验证。
 
 ## License
 

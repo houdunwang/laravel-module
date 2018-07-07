@@ -12,8 +12,7 @@ trait MenusService
     {
         foreach (\Module::getOrdered() as $module) {
             $path                   = config('modules.paths.modules')."/{$module->name}/Config";
-            $config                 = include "{$path}/config.php";
-            $menus[$module->getName()] = include "{$path}/menus.php";
+            $menus[\HDModule::config($module->name.'.config.name')] = include "{$path}/menus.php";
         }
 
         return $menus;

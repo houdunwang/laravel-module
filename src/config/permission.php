@@ -6,14 +6,13 @@
  * '-------------------------------------------------------------------*/
 /**
  * 权限配置
- * 为了避免其他模块有同名的权限，权限标识要以 '模块标识::' 开始
+ * 为了避免其他模块有同名的权限，权限标识要以 '控制器@方法' 开始
  */
 return [
     [
         'group' => '文章管理',
         'permissions' => [
-            ['title' => '栏目管理', 'name' => 'Test::editor article', 'guard' => 'admin'],
-            ['title' => '文章管理', 'name' => 'Test::delete article', 'guard' => 'admin'],
+            ['title' => '添加栏目', 'name' => 'Modules\Admin\Http\Controllers\CategoryController@create', 'guard' => 'admin'],
         ],
     ],
 ];

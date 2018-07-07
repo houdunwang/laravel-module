@@ -35,6 +35,11 @@ class LaravelServiceProvider extends ServiceProvider
         }
 
         $this->loadMigrationsFrom(__DIR__.'/Migrations');
+
+        //配置文件
+        $this->publishes([
+            __DIR__.'/config/hd_module.php' => config_path('hd_module.php'),
+        ]);
     }
 
     /**
