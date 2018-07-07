@@ -38,7 +38,7 @@ class LaravelServiceProvider extends ServiceProvider
 
         //配置文件
         $this->publishes([
-            __DIR__.'/config/hd_module.php' => config_path('hd_module.php'),
+            __DIR__.'/hd_module.php' => config_path('hd_module.php'),
         ]);
     }
 

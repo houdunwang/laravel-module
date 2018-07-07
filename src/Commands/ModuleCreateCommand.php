@@ -3,6 +3,7 @@ namespace Houdunwang\Module\Commands;
 
 use Illuminate\Console\Command;
 use Artisan;
+use Storage;
 
 class ModuleCreateCommand extends Command
 {
@@ -37,15 +38,22 @@ class ModuleCreateCommand extends Command
      */
     public function handle()
     {
-        $name = $this->argument('name');
-        if(\Module::has($name)){
+        $name = ucfirst($this->argument('name'));
+        if (\Module::has($name)) {
             return $this->error("Module [{$this->name}] already exists");
         }
         $this->call('module:make', [
-            'name' => [$name]
+            'name' => [$name],
         ]);
         $this->call('hd:config', [
-            'name' => $name
+            'name' => $name,
         ]);
+
+        //创建前端文件
+        $jsPath = \Module::getPath('Module')."/{$name}/resources/assets/js";
+        copy(__DIR__.'/../../resources/js/bootstrap.js',$jsPath.'/bootstrap.js');
+        copy(__DIR__.'/../../resources/js/app.js',$jsPath.'/app.js');
+        copy(__DIR__.'/../../resources/js/ExampleComponent.vue',$jsPath.'/ExampleComponent.vue');
+        copy(__DIR__.'/../package.json',\Module::getPath('Module')."/{$name}/package.json");
     }
 }
