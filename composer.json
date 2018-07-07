@@ -25,7 +25,8 @@
     "require": {
         "nwidart/laravel-modules": "^3.3",
         "spatie/laravel-permission": "^2.12",
-        "houdunwang/laravel-view": "^1.0"
+        "houdunwang/laravel-view": "^1.0",
+        "houdunwang/laravel-upload": "^1.0"
     },
     "autoload": {
         "psr-4": {
