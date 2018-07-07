@@ -1,12 +1,14 @@
-## 介绍
+## 组件介绍
 
-通过使用模块来管理大型Laravel项目。模块就像一个laravel包。这个包已经在 [HDCMS](http://www.hdcms.com) 中使用。
+通过使用模块来管理大型Laravel项目，模块就像一个laravel包非常方便的进行添加或移除。
+
+这个包已经在 [HDCMS](http://www.hdcms.com) 中使用。
 
 模块是在 [nwidart.com/laravel-modules](https://nwidart.com/laravel-modules/v3/advanced-tools/artisan-commands) 和  [laravel-permission](https://github.com/spatie/laravel-permission#installation)  组件基础上扩展了一些功能，所以需要先安装这两个组件。
 
 > laravel-modules 和 laravel-permission 组件的功能都可以正常使用
 
-## 安装
+## 安装组件
 
     composer require houdunwang/laravel-module
     
@@ -31,7 +33,7 @@
       }
     }
 
-## 基础
+## 基础知识
 
 ### 创建模块
 
@@ -67,13 +69,13 @@ php artisan hd:config Admin
 \HDModule::config('admin.config.name')
 ```
 
-## 菜单
+## 后台菜单
 
 系统会根据模块配置文件 `menus.php` 生成后台菜单项
 
 当 menus.php 文件不存在时，执行 `php artisan hd:config Admin` 系统会为模块 Admin 创建菜单。
 
-### 获取菜单
+**获取菜单**
 
 获取系统可使用的所有菜单，以集合形式返回数据。可用于后台显示菜单列表。
 
@@ -81,13 +83,11 @@ php artisan hd:config Admin
 \HDModule::getMenus()
 ```
 
-## 权限
+## 权限管理
 
 首先需要安装 [laravel-permission](https://github.com/spatie/laravel-permission#installation) 组件，安装方式在上面已经介绍。
 
-### 配置
-
-#### 创建
+### 创建权限配置
 
 系统根据 `Admin` 模块配置文件 `permission.php` 重新生成权限，执行以下命令会创建权限配置文件。
 
@@ -118,7 +118,7 @@ php artisan hd:permission
 
 name 指用于验证时的 `权限标识` ，可以使用任何字符定义。如果以 `控制器@方法` 形式定义的，在使用中间件验证时会比较容易。
 
-#### 获取
+### 获取权限配置
 
 根据 `guard` 获取权限数据，可用于后台配置设置表单。
 
@@ -134,7 +134,7 @@ name 指用于验证时的 `权限标识` ，可以使用任何字符定义。�
 
 使用中间件路由需要模块 `permission.php` 配置文件中的权限标识为 `控制器@方法`形式。
 
-#### 站长
+#### 站长特权
 
 配置文件 `config/hd_module.php` 文件中定义站长使用的角色。
 
