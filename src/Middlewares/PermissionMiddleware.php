@@ -4,6 +4,7 @@ namespace Houdunwang\Module\Middlewares;
 
 use Closure;
 use Houdunwang\Module\Exceptions\PermissionDenyException;
+use Houdunwang\Module\Traits\PermissionService;
 use Route;
 use DB;
 
@@ -14,6 +15,8 @@ use DB;
  */
 class PermissionMiddleware
 {
+    use PermissionService;
+
     /**
      * @param          $request
      * @param \Closure $next
@@ -29,12 +32,16 @@ class PermissionMiddleware
         }
         //站长不需要验证
         if ( ! $this->isWebMaster()) {
-            $permission = $this->getPermission($resource);
-            if ($this->permissionMastCheck($permission, $guard)) {
-                $auth = auth($guard)->user()->hasAnyPermission($permission);
-                if ( ! $auth) {
-                    throw new PermissionDenyException('你没有访问权限');
-                }
+            $permission    = $this->getPermission($resource);
+            $hasPermission = $this->hasPermission($permission, $guard);
+
+            //权限规则没有定义处理
+            if ( ! $hasPermission) {
+                return $next($request);
+            }
+            $auth = auth($guard)->user()->hasAnyPermission($permission);
+            if ( ! $auth) {
+                throw new PermissionDenyException('你没有访问权限');
             }
         }
 
@@ -49,26 +56,13 @@ class PermissionMiddleware
      *
      * @return bool
      */
-    protected function permissionMastCheck(string $permission, string $guard): bool
+    protected function hasPermission(string $permission, string $guard): bool
     {
         $where = [
             ['name', '=', $permission],
             ['guard_name', '=', $guard],
         ];
         $has   = DB::table('permissions')->where($where)->first();
-
-        return boolval($has);
-    }
-
-    /**
-     * 站长检测
-     *
-     * @return bool
-     */
-    protected function isWebMaster()
-    {
-        $relation = auth('admin')->user()->roles();
-        $has      = $relation->where('roles.name', config('hd_module.webmaster'))->first();
 
         return boolval($has);
     }
