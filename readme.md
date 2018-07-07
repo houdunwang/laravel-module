@@ -12,11 +12,11 @@
     
     php artisan vendor:publish --provider="Nwidart\Modules\LaravelModulesServiceProvider"
     
-    composer require spatie/laravel-permission
-    
     php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider" --tag="migrations"
     
     php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider" --tag="config"
+    
+    php artisan vendor:publish --provider="Houdunwang\Module\LaravelServiceProvider"
     
     php artisan migrate
 
