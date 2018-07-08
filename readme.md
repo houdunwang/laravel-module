@@ -211,7 +211,11 @@ Route::resource('role', 'RoleController')->middleware("permission:admin,resource
 \HDModule::currentModule()
 ```
 
+验证权限如果用户是站长直接放行
 
+```
+\HDModule::hadPermission()
+```
 
 ## License
 
