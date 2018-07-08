@@ -203,6 +203,16 @@ Route::resource('role', 'RoleController')->middleware("permission:admin,resource
 
 上面的 `permission` 中间件的 `admin` 参数是权限 `guard`，中间件 permission 的第二个参数 `resource` 表示这是一个资源路由验证。
 
+## 模块方法
+
+获取当前请求使用的模块名
+
+```
+\HDModule::currentModule()
+```
+
+
+
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

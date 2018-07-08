@@ -19,4 +19,16 @@ use Houdunwang\Module\Traits\PermissionService;
 class Provider
 {
     use ConfigService, PermissionService, MenusService;
+
+    /**
+     * 当前模块
+     * @return mixed
+     */
+    public function currentModule()
+    {
+        $controller = \Route::getCurrentRoute()->getAction()['controller'];
+        preg_match('@\\\(.*?)\\\@i', $controller, $match);
+
+        return $module = ($match[1]);
+    }
 }
