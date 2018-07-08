@@ -231,6 +231,30 @@ Route::resource('role', 'RoleController')->middleware("permission:admin,resource
 \HDModule::hadPermission()
 ```
 
+## 自动化构建
+
+大部分业务由 Controller控制器、Request请求难、Model模型、View视图、Handle处理器构成，很多时间这些工作都是重复的，系统支持通过一行命令生成业务需要的大部功能。
+
+生成工作是根据模型和数据表完成的，所以必须先创建模型在数据库中创建模型表。
+
+### 创建模型和迁移
+
+执行以下命令系统会为 Article 模块创建 Category模型和对应的数据迁移文件。
+
+```
+php artisan hd:model Category Article
+```
+
+### 执行自动化构建
+
+完成上面的模型与数据表创建后，执行以下命令系统将自动生成基础业务框架。
+
+下面是根据 Article 模块的 Category 模型生成业务框架，系统同时会创建模型表单处理器，请查看 https://github.com/houdunwang/laravel-view 学习。
+
+```
+php artisan hd:build Category Article
+```
+
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

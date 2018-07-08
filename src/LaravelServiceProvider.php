@@ -7,6 +7,8 @@
 
 namespace Houdunwang\Module;
 
+use Houdunwang\Module\Commands\BuildCreateCommand;
+use Houdunwang\Module\Commands\ModelCreateCommand;
 use Houdunwang\Module\Commands\PermissionCreateCommand;
 use Houdunwang\Module\Services\MenusService;
 use Illuminate\Support\ServiceProvider;
@@ -16,7 +18,7 @@ use Houdunwang\Module\Commands\ConfigCreateCommand;
 class LaravelServiceProvider extends ServiceProvider
 {
     public $singletons = [
-        'hd-menu'  => MenusService::class,
+        'hd-menu' => MenusService::class,
     ];
 
     /**
@@ -31,6 +33,8 @@ class LaravelServiceProvider extends ServiceProvider
                 ModuleCreateCommand::class,
                 ConfigCreateCommand::class,
                 PermissionCreateCommand::class,
+                ModelCreateCommand::class,
+                BuildCreateCommand::class,
             ]);
         }
 
