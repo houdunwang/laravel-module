@@ -54,6 +54,7 @@ class ModuleCreateCommand extends Command
         copy(__DIR__.'/../../resources/js/bootstrap.js',$jsPath.'/bootstrap.js');
         copy(__DIR__.'/../../resources/js/app.js',$jsPath.'/app.js');
         copy(__DIR__.'/../../resources/js/ExampleComponent.vue',$jsPath.'/ExampleComponent.vue');
-        copy(__DIR__.'/../package.json',\Module::getPath('Module')."/{$name}/package.json");
+        copy(__DIR__.'/../copys/package.json',\Module::getPath('Module')."/{$name}/package.json");
+        copy(__DIR__.'/../copys/gitignore',\Module::getPath('Module')."/{$name}/.gitignore");
     }
 }
