@@ -134,6 +134,20 @@ name 指用于验证时的 `权限标识` ，可以使用任何字符定义。�
 
 使用中间件路由需要模块 `permission.php` 配置文件中的权限标识为 `控制器@方法`形式。
 
+### 配置
+
+在 `app/Http/Kernel.php` 文件的 `$routeMiddleware` 段添加中间件
+
+```
+protected $routeMiddleware = [
+	...
+	'permission'    => \Houdunwang\Module\Middlewares\PermissionMiddleware::class,
+	...
+];
+```
+
+
+
 #### 站长特权
 
 配置文件 `config/hd_module.php` 文件中定义站长使用的角色。
