@@ -12,9 +12,8 @@ class {MODEL}Controller extends Controller
     public function index()
     {
         $data = {MODEL}::paginate(10);
-        $handle = new {MODEL}Handle(new Category);
-        $columns = $handle->getListColumns();
-        return view('{SMODULE}::{SMODEL}.index', compact('data','columns','handle'));
+        $handle = new {MODEL}Handle(new {MODEL});
+        return view('{SMODULE}::{SMODEL}.index', compact('data','handle'));
     }
 
     //创建视图

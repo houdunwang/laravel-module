@@ -30,7 +30,7 @@
                                 @foreach($columns as $column)
                                     @isset($column['title'])
                                         <td>
-                                            {{$handle->value($column,$d)}}
+                                            {!! $handle->value($d,$column['name']) !!}
                                         </td>
                                     @endisset
                                 @endforeach

@@ -265,6 +265,8 @@ php artisan hd:build Category Article
 
 > 必须保存模型与数据表存在，文件存在时忽略这个文件继续向下执行
 
+
+
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
