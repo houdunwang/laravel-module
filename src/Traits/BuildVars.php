@@ -30,9 +30,9 @@ trait BuildVars
         $this->vars['SMODEL']          = snake_case($model);
         $this->vars['SMODULE']         = snake_case($module);
         $this->vars['MODULE_PATH']     = config('modules.paths.modules').'/'.$module.'/';
-        $this->vars['MODEL_PATH']      = $this->vars['MODULE_PATH'].'/Entities/';
-        $this->vars['CONTROLLER_PATH'] = $this->vars['MODULE_PATH'].'/Http/Controllers/';
-        $this->vars['REQUEST_PATH']    = $this->vars['MODULE_PATH'].'/Http/Requests/';
+        $this->vars['MODEL_PATH']      = $this->vars['MODULE_PATH'].'Entities/';
+        $this->vars['CONTROLLER_PATH'] = $this->vars['MODULE_PATH'].'Http/Controllers/';
+        $this->vars['REQUEST_PATH']    = $this->vars['MODULE_PATH'].'Http/Requests/';
     }
 
     protected function setVar($name, $value)

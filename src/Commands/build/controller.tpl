@@ -5,18 +5,20 @@ use App\Http\Controllers\Controller;
 use {NAMESPACE}Entities\{MODEL};
 use Illuminate\Http\Request;
 use {NAMESPACE}Tables\{MODEL}Handle;
-
+use Modules\Article\Http\Requests\{MODEL}Request;
 class {MODEL}Controller extends Controller
 {
     //显示列表
     public function index()
     {
-        $data = Role::paginate(10);
-        return view('{SMODULE}::{SMODEL}.index', compact('data'));
+        $data = {MODEL}::paginate(10);
+        $handle = new {MODEL}Handle(new Category);
+        $columns = $handle->getListColumns();
+        return view('{SMODULE}::{SMODEL}.index', compact('data','columns','handle'));
     }
 
     //创建视图
-    public function create(RoleRequest $request)
+    public function create()
     {
         $handle = new {MODEL}Handle(new {MODEL});
         $html   = $handle->render();
@@ -29,7 +31,7 @@ class {MODEL}Controller extends Controller
         ${SMODEL}->fill($request->all());
         ${SMODEL}->save();
 
-        return back()->with('success', '保存成功');
+        return redirect('/{SMODULE}/{SMODEL}')->with('success', '保存成功');
     }
 
     //显示记录

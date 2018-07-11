@@ -42,37 +42,45 @@ class BuildCreateCommand extends Command
         $this->model  = ucfirst($this->argument('model'));
         $this->module = ucfirst($this->argument('module'));
         $this->setVars($this->model, $this->module);
-        $this->setModelInstance();
-        //$this->setVar('TABLE_COMMENT', $this->getTableComment($this->modelInstance));
-//die;
+        //if ( ! $this->check()) {
+            $this->setModelInstance();
+            $this->setVar('MODEL_TITLE', $this->getTableComment($this->modelInstance));
+            $this->call('hd:handle', ['model' => $this->model, 'module' => $this->module]);
+            $this->createController();
+            $this->createRequest();
+            $this->createRoute();
+            $this->createViews();
+        //}
+    }
 
-        $this->call('hd:handle', ['model' => $this->model, 'module' => $this->module]);
-        if ($this->isCreated()) {
-            //return $this->info('buile file is exists');
+    protected function check(): bool
+    {
+        $model = $this->vars['NAMESPACE'].'Entities\\'.$this->model;
+        if ( ! class_exists($model)) {
+            $this->error("module {$model} no exists");
+
+            return false;
         }
-        $this->createController();
-        $this->createRequest();
-        $this->createRoute();
-        $this->createViews();
+        $file = $this->getVar('CONTROLLER_PATH').$this->model.'Controller.php';
+        if (is_file($file)) {
+            $this->info('buile file is exists');
+
+            return false;
+        }
+
+        return true;
     }
 
     protected function createViews()
     {
         foreach (['create', 'edit', 'index', 'show'] as $name) {
             $content = $this->replaceVars(__DIR__."/build/views/{$name}.blade.php");
-            $dir = $this->vars['MODULE_PATH']."Resources/views/{$this->vars['SMODEL']}/";
-            is_dir($dir) or mkdir($dir,0755,true);
+            $dir     = $this->vars['MODULE_PATH']."Resources/views/{$this->vars['SMODEL']}/";
+            is_dir($dir) or mkdir($dir, 0755, true);
             Storage::makeDirectory($dir);
-            file_put_contents($dir."{$name}.blade.php",$content);
+            file_put_contents($dir."{$name}.blade.php", $content);
         }
-    }
-
-    protected function isCreated(): bool
-    {
-        $file = $this->getVar('CONTROLLER_PATH').$this->model.'Controller.php';
-
-        return is_file($file);
-
+        $this->info('view create successflly');
     }
 
     protected function createRoute()
@@ -114,7 +122,6 @@ str;
         $content = $this->replaceVars(__DIR__.'/build/request.tpl');
         $content = str_replace('{REQUEST_RULE}', var_export($this->getRequestRule(), true), $content);
         $content = str_replace('{REQUEST_RULE_MESSAGE}', var_export($this->getRequestRuleMessage(), true), $content);
-
         $file = $this->getVar('REQUEST_PATH').$this->model.'Request.php';
         file_put_contents($file, $content);
         $this->info('request create successflly');
