@@ -255,6 +255,16 @@ php artisan hd:model Category Article
 php artisan hd:build Category Article
 ```
 
+执行以下命令会创建下列文件
+
+1. 创建控制器 Http/Controllers/CategoryController
+2. 表单验证请求 Http/Request/CategoryRequest
+3. 添加路由规则 routes.php
+4. 生成资源控制器视图
+5. 创建模型处理器 Tables/CategoryHand.php
+
+> 必须保存模型与数据表存在，文件存在时忽略这个文件继续向下执行
+
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
