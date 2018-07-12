@@ -49,7 +49,7 @@ class ConfigCreateCommand extends Command
     {
         $files = glob(__DIR__.'/../config/*.php');
         foreach ($files as $file) {
-            $to = \Module::getModulePath($this->module).'/config/'.basename($file);
+            $to = \Module::getModulePath($this->module).'Config/'.basename($file);
             if (is_file($to)) {
                 $this->info($to." is exists");
                 continue;

@@ -31,7 +31,7 @@ class PermissionMiddleware
             throw new PermissionDenyException('请登录后操作');
         }
         //站长不需要验证
-        if ( ! $this->isWebMaster()) {
+        if ( ! $this->isWebMaster($guard)) {
             $permission    = $this->getPermission($resource);
             $hasPermission = $this->hasPermission($permission, $guard);
 

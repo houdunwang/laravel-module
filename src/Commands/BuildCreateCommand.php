@@ -48,7 +48,7 @@ class BuildCreateCommand extends Command
         $this->setVars($this->model, $this->module);
         if ($this->check()) {
             $this->setModelInstance();
-            $this->setVar('MODEL_TITLE', $this->getTableComment($this->modelInstance));
+            $this->setVar('MODEL_TITLE', $this->modelTitle);
             $this->call('hd:handle', ['model' => $this->model, 'module' => $this->module]);
             $this->createController();
             $this->createRequest();

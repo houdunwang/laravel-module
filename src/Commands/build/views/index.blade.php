@@ -1,6 +1,6 @@
 @extends('admin::layouts.master')
 @section('content')
-    <div class="card">
+    <div class="card" id="app">
         <div class="card-header">{MODEL_TITLE}管理</div>
         <div class="tab-container">
             <ul role="tablist" class="nav nav-tabs">
@@ -13,7 +13,7 @@
                         <thead>
                         <tr>
                             <th style="width: 10%;">编号</th>
-                            @foreach($columns as $column)
+                            @foreach($handle->getListColumns() as $column)
                                 @isset($column['title'])
                                     <th>{{$column['title']}}</th>
                                 @endisset
@@ -27,7 +27,7 @@
                         @foreach($data as $d)
                             <tr>
                                 <td>{{$d['id']}}</td>
-                                @foreach($columns as $column)
+                                @foreach($handle->getListColumns() as $column)
                                     @isset($column['title'])
                                         <td>
                                             {!! $handle->value($d,$column['name']) !!}
@@ -54,6 +54,8 @@
     <div class="float-right">
         {{$data->links()}}
     </div>
+    <link rel="stylesheet" href="{{ asset('css/{SMODULE}.css') }}">
+    <script src="{{ asset('js/{SMODULE}.js') }}"></script>
 @endsection
 @section('scripts')
     <script>

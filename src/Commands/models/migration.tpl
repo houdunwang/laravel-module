@@ -12,6 +12,10 @@ class Create{MIGRATION}Table extends Migration
         Schema::create('{SNAKE_MIGRATION}', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
+            $table->string('title')->comment('标题|input');
+            $table->text('content')->comment('内容|simditor');
+            $table->string('thumb')->comment('缩略图|image');
+            $table->integer('click')->comment('查看次数|input');
         });
     }
 

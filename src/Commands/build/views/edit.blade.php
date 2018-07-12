@@ -1,6 +1,6 @@
 @extends('admin::layouts.master')
 @section('content')
-    <div class="card">
+    <div class="card" id="app">
         <div class="card-header">{MODEL_TITLE}管理</div>
         <ul role="tablist" class="nav nav-tabs">
             <li class="nav-item"><a href="/{SMODULE}/{SMODEL}" class="nav-link">{MODEL_TITLE}列表</a></li>
@@ -16,4 +16,6 @@
             </div>
         </form>
     </div>
+    <link rel="stylesheet" href="{{ asset('css/{SMODULE}.css') }}">
+    <script src="{{ asset('js/{SMODULE}.js') }}?_{{microtime()}}"></script>
 @endsection
