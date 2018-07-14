@@ -54,8 +54,6 @@
     <div class="float-right">
         {{$data->links()}}
     </div>
-    <link rel="stylesheet" href="{{ asset('css/{SMODULE}.css') }}">
-    <script src="{{ asset('js/{SMODULE}.js') }}"></script>
 @endsection
 @section('scripts')
     <script>

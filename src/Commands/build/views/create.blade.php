@@ -16,6 +16,4 @@
             </div>
         </form>
     </div>
-    <link rel="stylesheet" href="{{ asset('css/{SMODULE}.css') }}">
-    <script src="{{ asset('js/{SMODULE}.js') }}"></script>
 @endsection
