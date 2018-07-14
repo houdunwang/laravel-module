@@ -247,12 +247,16 @@ php artisan hd:model Category Article
 
 ### 执行自动化构建
 
-完成上面的模型与数据表创建后，执行以下命令系统将自动生成基础业务框架。
-
-下面是根据 Article 模块的 Category 模型生成业务框架，系统同时会创建模型表单处理器，请查看 https://github.com/houdunwang/laravel-view 学习。
+首先安装组件
 
 ```
-php artisan hd:build Category Article
+composer require houdunwang/laravel-autocreate
+```
+
+下面是根据 Article 模块的 Category 模型生成业务框架，系统同时会创建模型表单处理器，请查看 https://github.com/houdunwang/laravel-autocreate 学习。
+
+```
+php artisan hd:autocreate Modules/Article/Entities/Category.php 文章
 ```
 
 执行以下命令会创建下列文件
@@ -260,10 +264,9 @@ php artisan hd:build Category Article
 1. 创建控制器 Http/Controllers/CategoryController
 2. 表单验证请求 Http/Request/CategoryRequest
 3. 添加路由规则 routes.php
-4. 生成资源控制器视图
-5. 创建模型处理器 Tables/CategoryHand.php
+4. 生成模版视图
 
-> 必须保存模型与数据表存在，文件存在时忽略这个文件继续向下执行
+> 必须保存模型与数据表存在，某个文件存在时忽略这个文件继续向下执行
 
 ## License
 
