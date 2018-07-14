@@ -1,11 +1,13 @@
 <?php
 namespace Houdunwang\Module\Commands;
 
+use Houdunwang\Module\Traits\BuildVars;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 
 class ConfigCreateCommand extends Command
 {
+    use BuildVars;
     /**
      * The name and signature of the console command.
      *
@@ -40,6 +42,7 @@ class ConfigCreateCommand extends Command
     public function handle()
     {
         $this->module = ucfirst($this->argument('name'));
+        $this->setVars('',$this->module);
         if (\Module::has($this->module)) {
             $this->copyFiles();
         }
@@ -54,7 +57,7 @@ class ConfigCreateCommand extends Command
                 $this->info($to." is exists");
                 continue;
             }
-            copy($file, $to);
+            file_put_contents($to,$this->replaceVars($file));
             $this->info("{$to} file create successfully");
         }
     }

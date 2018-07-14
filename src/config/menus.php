@@ -13,7 +13,7 @@
  * permission 权限标识，必须在permission.php配置文件中存在
  */
 return [
-    [
+    '{MODULE}'=>[
         "title"      => "系统管理",
         "icon"       => "fa fa-navicon",
         'permission' => '权限标识',
