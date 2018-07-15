@@ -1,7 +1,7 @@
 <?php
 namespace Houdunwang\Module\Commands;
 
-use Houdunwang\LaravelView\Traits\Db;
+use Houdunwang\Module\Traits\Db;
 use Houdunwang\Module\Traits\BuildVars;
 use Illuminate\Console\Command;
 use Artisan;
