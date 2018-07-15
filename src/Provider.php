@@ -9,6 +9,7 @@ namespace Houdunwang\Module;
 
 use Houdunwang\Module\Traits\ConfigService;
 use Houdunwang\Module\Traits\MenusService;
+use Houdunwang\Module\Traits\ModuleService;
 use Houdunwang\Module\Traits\PermissionService;
 
 /**
@@ -18,17 +19,6 @@ use Houdunwang\Module\Traits\PermissionService;
  */
 class Provider
 {
-    use ConfigService, PermissionService, MenusService;
+    use ConfigService, PermissionService, MenusService,ModuleService;
 
-    /**
-     * 当前模块
-     * @return mixed
-     */
-    public function currentModule()
-    {
-        $controller = \Route::getCurrentRoute()->getAction()['controller'];
-        preg_match('@\\\(.*?)\\\@i', $controller, $match);
-
-        return $module = ($match[1]);
-    }
 }

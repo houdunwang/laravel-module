@@ -231,6 +231,16 @@ Route::resource('role', 'RoleController')->middleware("permission:admin,resource
 \HDModule::hadPermission()
 ```
 
+获取模块菜单，参数为模块标识，不传参数时获取当前模块菜单
+```
+\HDModule::getMenuByModule('Admin')
+```
+获取模块列表，参数为不需要返回的模块，不传参数获取所有模块
+
+```
+\HDModule::getModulesLists(['Admin','Article'])
+```
+
 ## 自动化构建
 
 大部分业务由 Controller控制器、Request请求难、Model模型、View视图、Handle处理器构成，很多时间这些工作都是重复的，系统支持通过一行命令生成业务需要的大部功能。
