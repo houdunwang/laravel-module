@@ -6,6 +6,8 @@
  * '-------------------------------------------------------------------*/
 namespace Houdunwang\Module\Traits;
 
+use Module;
+
 trait ModuleService
 {
     /**
@@ -35,5 +37,31 @@ trait ModuleService
         }
 
         return $modules;
+    }
+
+    /**
+     * 获取模块
+     *
+     * @param null $module
+     *
+     * @return mixed|void
+     */
+    public function module($module = null)
+    {
+        $module = $module ?? $this->currentModule();
+
+        return Module::find($module);
+    }
+
+    /**
+     * 获取模块路径
+     *
+     * @param null $module
+     *
+     * @return mixed
+     */
+    public function getModulePath($module = null)
+    {
+        return Module::find($this->module($module))->getPath();
     }
 }

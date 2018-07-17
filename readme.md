@@ -33,9 +33,7 @@
       }
     }
 
-## 基础知识
-
-### 创建模块
+## 创建模块
 
 下面的命令是安装 `Admin` 模块
 
@@ -47,7 +45,7 @@ php artisan hd:module Admin
 * 生成 `menus.php` 配置文件
 * 生成 `permission.php` 权限文件
 
-### 模块配置
+## 模块配置
 
 新建模块时系统会自动创建配置，一般情况下不需要执行以下命令生成配置文件（除组件添加新配置功能外）
 
@@ -68,6 +66,15 @@ php artisan hd:config Admin
 ```
 \HDModule::config('admin.config.name')
 ```
+
+**保存配置**
+
+```
+function saveConfig(array $data = [], $name = 'config')
+```
+
+* $data——配置数据
+* $name——配置文件
 
 ## 后台菜单
 
@@ -134,7 +141,7 @@ name 指用于验证时的 `权限标识` ，可以使用任何字符定义。�
 
 使用中间件路由需要模块 `permission.php` 配置文件中的权限标识为 `控制器@方法`形式。
 
-### 配置
+**配置**
 
 在 `app/Http/Kernel.php` 文件的 `$routeMiddleware` 段添加中间件
 
@@ -146,9 +153,7 @@ protected $routeMiddleware = [
 ];
 ```
 
-
-
-#### 站长特权
+### 站长特权
 
 配置文件 `config/hd_module.php` 文件中定义站长使用的角色。
 
@@ -158,7 +163,7 @@ protected $routeMiddleware = [
 
 在使用中间件验证时，如果不前用户所在角色为站长角色，系统不进行验证直接放行。
 
-#### 普通路由
+### 普通路由
 
 系统根据控制器方法检查是否存在权限规则，然后自动进行验证。
 
@@ -188,7 +193,7 @@ Route::group([
 
 上面的 `permission` 中间件的 `admin` 参数是权限 `guard`。
 
-#### 资源路由
+### 资源路由
 
 资源路由新增资源由 `create` 与 `store`方法完成，更新资源由 `edit` 与 `update` 方法完成。权限规则只需要设置 `create` 与 `edit` 方法即可，在执行 `store` 动作时系统会自动使用 `create` 方法规则，`update` 动作会使用 `create` 方法规则，下面是用户管理的资源控制器规则设置:
 
@@ -219,26 +224,40 @@ Route::resource('role', 'RoleController')->middleware("permission:admin,resource
 
 ## 模块方法
 
+获取模块对象
+
+```
+#$module 模块标识
+\HDModule::module($module = null)
+```
+
 获取当前请求使用的模块名
 
 ```
 \HDModule::currentModule()
 ```
 
+获取模块菜单，参数为模块标识，不传参数时获取当前模块菜单
+```
+\HDModule::getMenuByModule('Admin')
+```
 验证权限如果用户是站长直接放行
 
 ```
 \HDModule::hadPermission()
 ```
 
-获取模块菜单，参数为模块标识，不传参数时获取当前模块菜单
-```
-\HDModule::getMenuByModule('Admin')
-```
 获取模块列表，参数为不需要返回的模块，不传参数获取所有模块
 
 ```
 \HDModule::getModulesLists(['Admin','Article'])
+```
+
+获取模块路径
+
+```
+#$module——模块标识
+\HDModule::getModulePath($module = null);
 ```
 
 ## 自动化构建

@@ -32,4 +32,13 @@ trait ConfigService
             return $exts ? array_get($config, implode('.', $exts)) : $config;
         }
     }
+
+    public function saveConfig(array $data = [], $name = 'config')
+    {
+        $module = HDModule::currentModule();
+        $config = array_merge(HDModule::config($module.'.'.$name), $data);
+        $file   = HDModule::getModulePath().'/Config/'.$name.'.php';
+
+        return file_put_contents($file, '<?php return '.var_export($config, true).';');
+    }
 }
