@@ -7,7 +7,7 @@
 namespace Houdunwang\Module\Traits;
 
 use Module;
-
+use HDModule;
 /**
  * Class ModuleConfig
  *
