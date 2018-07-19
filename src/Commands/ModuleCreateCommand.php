@@ -50,7 +50,7 @@ class ModuleCreateCommand extends Command
         ]);
 
         //创建前端文件
-        $jsPath = \Module::getPath('Module')."/{$name}/resources/assets/js";
+        $jsPath = \Module::getPath('Module')."/{$name}/Resources/assets/js";
         copy(__DIR__.'/../../resources/js/bootstrap.js',$jsPath.'/bootstrap.js');
         copy(__DIR__.'/../../resources/js/app.js',$jsPath.'/app.js');
         copy(__DIR__.'/../../resources/js/ExampleComponent.vue',$jsPath.'/ExampleComponent.vue');
