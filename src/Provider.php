@@ -20,5 +20,4 @@ use Houdunwang\Module\Traits\PermissionService;
 class Provider
 {
     use ConfigService, PermissionService, MenusService,ModuleService;
-
 }
