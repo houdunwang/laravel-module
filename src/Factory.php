@@ -24,7 +24,6 @@ class Factory extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        dd(333);
         return 'HDModule';
     }
 }
